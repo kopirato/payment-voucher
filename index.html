@@ -1,1 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Petty Cash Voucher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f2f2f2;
+  padding:20px;
+}
+
+.voucher{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  padding:40px;
+  border:2px solid #000;
+  position:relative;
+}
+
+/* Header */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.logo{
+  width:220px;
+}
+
+.voucher-no{
+  font-size:18px;
+}
+
+/* Title */
+.title{
+  font-size:36px;
+  font-weight:800;
+  margin:25px 0 30px;
+}
+
+/* Amount box */
+.amount-box{
+  position:absolute;
+  top:120px;
+  right:40px;
+  border:2px solid black;
+  width:220px;
+  height:90px;
+  padding:10px;
+}
+
+.amount-box span{
+  display:block;
+  margin-top:25px;
+  border-bottom:1px dotted black;
+}
+
+/* Rows */
+.row{
+  margin:28px 0;
+  font-size:18px;
+}
+
+.row label{
+  display:inline-block;
+  width:120px;
+}
+
+.line{
+  display:inline-block;
+  border-bottom:1px dotted black;
+  width:70%;
+  height:18px;
+}
+
+/* Split row */
+.split{
+  display:flex;
+  justify-content:space-between;
+}
+
+.split .line{
+  width:250px;
+}
+
+/* Watermark */
+.watermark{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:380px;
+  opacity:0.08;
+  z-index:0;
+}
+
+.content{
+  position:relative;
+  z-index:1;
+}
+
+/* Print */
+@media print{
+  body{
+    background:white;
+    padding:0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .voucher{
+    border:none;
+  }
+
+  button{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="voucher">
+
+  <!-- Watermark -->
+  <img src="voucher.png" class="watermark">
+
+  <div class="content">
+
+    <!-- Header -->
+    <div class="header">
+      <img src="voucher.png" class="logo">
+      <div class="voucher-no">No: __________________</div>
+    </div>
+
+    <!-- Title -->
+    <div class="title">Petty Cash Voucher</div>
+
+    <!-- Amount -->
+    <div class="amount-box">
+      <strong>Amount</strong>
+      <span></span>
+    </div>
+
+    <!-- Body -->
+    <div class="row">
+      <label>Date:</label>
+      <span class="line"></span>
+    </div>
+
+    <div class="row">
+      <label>Paid to:</label>
+      <span class="line" style="width:80%;"></span>
+    </div>
+
+    <div class="row split">
+      <div>
+        <label>For:</label>
+        <span class="line"></span>
+      </div>
+
+      <div>
+        <label>Ac/No:</label>
+        <span class="line"></span>
+      </div>
+    </div>
+
+    <div class="row split" style="margin-top:40px;">
+      <div>
+        <label>Received by:</label>
+        <span class="line"></span>
+      </div>
+
+      <div>
+        <label>Paid by:</label>
+        <span class="line"></span>
+      </div>
+    </div>
+
+    <br><br>
+
+    <button onclick="window.print()">Print Blank Voucher</button>
+
+  </div>
+</div>
+
+</body>
+</html>
 
