@@ -26,6 +26,9 @@ body{
   padding:50px 60px 70px;
   position:relative;
   box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  gap:30px; /* spacing between sections */
 }
 
 .watermark{
@@ -37,14 +40,10 @@ body{
   z-index:0;
 }
 
-.content{
-  position:relative;
-  z-index:1;
-}
-
 .header{
   display:flex;
   justify-content:space-between;
+  align-items:center;
 }
 
 .logo{
@@ -53,21 +52,18 @@ body{
 
 .voucher-no{
   font-size:20px;
-  margin-top:18px;
 }
 
 .title{
   font-size:42px;
   font-weight:800;
-  margin:25px 0 80px; /* Adjusted top margin to move title up */
+  text-align:center;
+  margin:0; /* Remove extra margin; spacing handled by flex gap */
 }
 
 .amount-box{
-  position:absolute;
-  top:240px;
-  right:60px;
   width:260px;
-  height:120px;
+  align-self:flex-end;
   border:2px solid #000;
   padding:12px;
 }
@@ -84,7 +80,7 @@ body{
 
 .row{
   font-size:22px;
-  margin:42px 0;
+  margin:20px 0;
 }
 
 .label{
@@ -111,11 +107,11 @@ body{
 .signatures{
   display:flex;
   justify-content:space-between;
-  margin-top:90px;
+  margin-top:60px;
 }
 
 .buttons{
-  margin-top:60px;
+  margin-top:40px;
   display:flex;
   gap:20px;
 }
@@ -165,64 +161,59 @@ button{
 
 <body>
 
-<!-- ================= SCREEN / PRINT VERSION ================= -->
-
 <div class="voucher" id="voucher">
 
   <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg" class="watermark">
 
-  <div class="content">
+  <div class="header">
+    <img src="WhatsApp Image 2026-02-09 at 13.49.18 (1).jpeg" class="logo">
+    <div class="voucher-no">No: __________________</div>
+  </div>
 
-    <div class="header">
-      <img src="WhatsApp Image 2026-02-09 at 13.49.18 (1).jpeg" class="logo">
-      <div class="voucher-no">No: __________________</div>
-    </div>
+  <div class="title">Petty Cash Voucher</div>
 
-    <div class="title">Petty Cash Voucher</div>
+  <div class="amount-box">
+    <h4>Amount</h4>
+    <div class="amount-line"></div>
+  </div>
 
-    <div class="amount-box">
-      <h4>Amount</h4>
-      <div class="amount-line"></div>
-    </div>
+  <div class="row">
+    <span class="label">Date:</span>
+    <span class="line"></span>
+  </div>
 
-    <div class="row">
-      <span class="label">Date:</span>
+  <div class="row">
+    <span class="label">Paid to:</span>
+    <span class="line" style="width:80%"></span>
+  </div>
+
+  <div class="row split">
+    <div class="group">
+      <span class="label">For:</span>
       <span class="line"></span>
     </div>
-
-    <div class="row">
-      <span class="label">Paid to:</span>
-      <span class="line" style="width:80%"></span>
+    <div class="group">
+      <span class="label">Ac/No:</span>
+      <span class="line"></span>
     </div>
-
-    <div class="row split">
-      <div class="group">
-        <span class="label">For:</span>
-        <span class="line"></span>
-      </div>
-      <div class="group">
-        <span class="label">Ac/No:</span>
-        <span class="line"></span>
-      </div>
-    </div>
-
-    <div class="signatures">
-      <div class="group">
-        <span class="label">Received by:</span>
-        <span class="line"></span>
-      </div>
-      <div class="group">
-        <span class="label">Paid by:</span>
-        <span class="line"></span>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button onclick="window.print()">Print Voucher</button>
-      <button onclick="downloadWord()">Download Editable Word</button>
-    </div>
-
   </div>
+
+  <div class="signatures">
+    <div class="group">
+      <span class="label">Received by:</span>
+      <span class="line"></span>
+    </div>
+    <div class="group">
+      <span class="label">Paid by:</span>
+      <span class="line"></span>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="window.print()">Print Voucher</button>
+    <button onclick="downloadWord()">Download Editable Word</button>
+  </div>
+
 </div>
 
 <!-- ================= WORD EXPORT TEMPLATE ================= -->
@@ -294,8 +285,6 @@ button{
   </table>
 
 </div>
-
-<!-- ================= WORD EXPORT SCRIPT ================= -->
 
 <script>
 function downloadWord(){
