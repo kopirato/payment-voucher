@@ -17,16 +17,16 @@ body{
   font-family:Arial, Helvetica, sans-serif;
 }
 
+/* ================= SCREEN / PRINT VERSION ================= */
+
 .voucher{
   max-width:1000px;
   margin:auto;
   background:#fff;
   padding:50px 60px 70px;
   position:relative;
-  box-sizing:border-box;
 }
 
-/* WATERMARK */
 .watermark{
   position:absolute;
   inset:0;
@@ -36,17 +36,14 @@ body{
   z-index:0;
 }
 
-/* CONTENT */
 .content{
   position:relative;
   z-index:1;
 }
 
-/* HEADER */
 .header{
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
 }
 
 .logo{
@@ -58,23 +55,20 @@ body{
   margin-top:18px;
 }
 
-/* TITLE */
 .title{
   font-size:42px;
   font-weight:800;
-  margin:40px 0 70px;
+  margin:45px 0 80px;
 }
 
-/* AMOUNT BOX */
 .amount-box{
   position:absolute;
-  top:230px;
+  top:240px;
   right:60px;
   width:260px;
   height:120px;
   border:2px solid #000;
   padding:12px;
-  box-sizing:border-box;
 }
 
 .amount-box h4{
@@ -87,7 +81,6 @@ body{
   border-bottom:2px solid #000;
 }
 
-/* BODY ROWS */
 .row{
   font-size:22px;
   margin:42px 0;
@@ -105,7 +98,6 @@ body{
   height:22px;
 }
 
-/* SPLIT */
 .split{
   display:flex;
   gap:40px;
@@ -115,22 +107,12 @@ body{
   width:48%;
 }
 
-.split .line{
-  width:100%;
-}
-
-/* SIGNATURES */
 .signatures{
   display:flex;
   justify-content:space-between;
   margin-top:90px;
 }
 
-.signatures .group{
-  width:45%;
-}
-
-/* BUTTONS */
 .buttons{
   margin-top:60px;
   display:flex;
@@ -143,16 +125,61 @@ button{
   cursor:pointer;
 }
 
-/* PRINT */
 @media print{
   body{ background:#fff; }
   button{ display:none; }
+}
+
+/* ================= WORD EXPORT (HIDDEN) ================= */
+
+#word-template{
+  display:none;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+#word-template table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+#word-template td{
+  padding:10px;
+  vertical-align:top;
+  font-size:14pt;
+}
+
+.word-title{
+  font-size:26pt;
+  font-weight:bold;
+  text-align:center;
+  padding:20px 0;
+}
+
+.word-line{
+  border-bottom:1px dotted #000;
+  height:24px;
+}
+
+.word-amount{
+  border:2px solid #000;
+  padding:10px;
+}
+
+.word-watermark{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:80%;
+  opacity:0.05;
+  z-index:-1;
 }
 </style>
 </head>
 
 <body>
 
+<!-- ================= SCREEN VERSION ================= -->
 <div class="voucher" id="voucher">
 
   <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg" class="watermark">
@@ -211,9 +238,65 @@ button{
   </div>
 </div>
 
+<!-- ================= WORD TEMPLATE ================= -->
+<div id="word-template">
+  <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg" class="word-watermark">
+
+  <table>
+    <tr>
+      <td>
+        <img src="WhatsApp Image 2026-02-09 at 13.49.18 (1).jpeg" width="200">
+      </td>
+      <td style="text-align:right;">
+        No: __________________
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="word-title">Petty Cash Voucher</td>
+    </tr>
+
+    <tr>
+      <td>Date:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td>Paid to:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td>For:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td>Ac/No:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td>Received by:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td>Paid by:</td>
+      <td class="word-line"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" class="word-amount">
+        Amount: __________________
+      </td>
+    </tr>
+  </table>
+</div>
+
 <script>
 function downloadWord(){
-  const content = document.getElementById("voucher").innerHTML;
+  const content = document.getElementById("word-template").innerHTML;
 
   const html = `
   <html xmlns:o='urn:schemas-microsoft-com:office:office'
@@ -227,10 +310,9 @@ function downloadWord(){
     type: 'application/msword'
   });
 
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'Petty_Cash_Voucher.doc';
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Petty_Cash_Voucher.doc";
   link.click();
 }
 </script>
