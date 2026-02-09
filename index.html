@@ -17,7 +17,7 @@ body{
   font-family:Arial, Helvetica, sans-serif;
 }
 
-/* ================= SCREEN / PRINT VERSION ================= */
+/* ================= SCREEN / PRINT ================= */
 
 .voucher{
   max-width:1000px;
@@ -25,6 +25,7 @@ body{
   background:#fff;
   padding:50px 60px 70px;
   position:relative;
+  box-sizing:border-box;
 }
 
 .watermark{
@@ -130,7 +131,7 @@ button{
   button{ display:none; }
 }
 
-/* ================= WORD EXPORT (HIDDEN) ================= */
+/* ================= WORD TEMPLATE ================= */
 
 #word-template{
   display:none;
@@ -144,8 +145,8 @@ button{
 
 #word-template td{
   padding:10px;
-  vertical-align:top;
   font-size:14pt;
+  vertical-align:top;
 }
 
 .word-title{
@@ -159,27 +160,13 @@ button{
   border-bottom:1px dotted #000;
   height:24px;
 }
-
-.word-amount{
-  border:2px solid #000;
-  padding:10px;
-}
-
-.word-watermark{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:80%;
-  opacity:0.05;
-  z-index:-1;
-}
 </style>
 </head>
 
 <body>
 
-<!-- ================= SCREEN VERSION ================= -->
+<!-- ================= SCREEN / PRINT VERSION ================= -->
+
 <div class="voucher" id="voucher">
 
   <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg" class="watermark">
@@ -238,22 +225,35 @@ button{
   </div>
 </div>
 
-<!-- ================= WORD TEMPLATE ================= -->
+<!-- ================= WORD EXPORT TEMPLATE ================= -->
+
 <div id="word-template">
-  <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg" class="word-watermark">
+
+  <!-- Watermark (Word-safe) -->
+  <table>
+    <tr>
+      <td align="center">
+        <img src="WhatsApp Image 2026-02-09 at 14.25.04.jpeg"
+             width="650"
+             style="opacity:0.08;">
+      </td>
+    </tr>
+  </table>
 
   <table>
     <tr>
       <td>
         <img src="WhatsApp Image 2026-02-09 at 13.49.18 (1).jpeg" width="200">
       </td>
-      <td style="text-align:right;">
+      <td align="right">
         No: __________________
       </td>
     </tr>
 
     <tr>
-      <td colspan="2" class="word-title">Petty Cash Voucher</td>
+      <td colspan="2" class="word-title">
+        Petty Cash Voucher
+      </td>
     </tr>
 
     <tr>
@@ -287,33 +287,49 @@ button{
     </tr>
 
     <tr>
-      <td colspan="2" class="word-amount">
+      <td colspan="2" style="border:2px solid #000; padding:12px;">
         Amount: __________________
       </td>
     </tr>
   </table>
+
 </div>
+
+<!-- ================= WORD EXPORT SCRIPT ================= -->
 
 <script>
 function downloadWord(){
+
   const content = document.getElementById("word-template").innerHTML;
 
-  const html = `
-  <html xmlns:o='urn:schemas-microsoft-com:office:office'
-        xmlns:w='urn:schemas-microsoft-com:office:word'
-        xmlns='http://www.w3.org/TR/REC-html40'>
-  <head><meta charset='utf-8'></head>
-  <body>${content}</body>
-  </html>`;
+  const wordHtml = `
+  <html xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <meta charset="utf-8">
+    <title>Petty Cash Voucher</title>
+  </head>
+  <body>
+    ${content}
+  </body>
+  </html>
+  `;
 
-  const blob = new Blob(['\ufeff', html], {
-    type: 'application/msword'
-  });
+  const blob = new Blob(
+    ['\ufeff', wordHtml],
+    { type: 'application/msword' }
+  );
 
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "Petty_Cash_Voucher.doc";
-  link.click();
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Petty_Cash_Voucher.doc";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 </script>
 
